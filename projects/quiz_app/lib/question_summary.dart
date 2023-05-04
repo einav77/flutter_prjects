@@ -17,43 +17,44 @@ class QuestionSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return //SizedBox(
-        //height: 30,
-        //child: SingleChildScrollView(
-        // הופך את אאפליקציה לאפשרות לגלילה
-        Column(
-      children: summaryData.map(
-        (data) {
-          return Row(
-            children: [
-              Text(((data['question_index'] as int) + 1).toString()),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      data['question'] as String,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontFamily: 'Raleway'),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      data['user_answer'] as String,
-                    ),
+    return SizedBox(
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          children: summaryData.map(
+            (data) {
+              return Row(
+                children: [
+                  Text(((data['question_index'] as int) + 1).toString()),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          data['question'] as String,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontFamily: 'Raleway'),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          data['user_answer'] as String,
+                        ),
 
-                    //),
-                    Text(
-                      data['corect_ansewr'] as String,
+                        //),
+                        Text(
+                          data['corect_ansewr'] as String,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      ).toList(),
+                  ),
+                ],
+              );
+            },
+          ).toList(),
+        ),
+      ),
     );
     //),
     //);
