@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/ans_button.dart';
 import 'package:quiz_app/data/question.dart';
+import 'package:quiz_app/models/quiz_question.dart';
 import 'package:quiz_app/quiz.dart';
 
 class QuestionPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   var currentQuestionNum = 0;
+  final _textController = TextEditingController();
 
   void answerQuestion(String selectedAnswer) {
     widget.chooseAnswer(selectedAnswer);
@@ -32,6 +34,10 @@ class _QuestionPageState extends State<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final currentQuestion = questions[currentQuestionNum];
+    String userInput = '';
+    String questionToUpload = '';
+    List<String> answersToUpload = [];
+    List<String> listToUpdate = [];
     // TODO: implement build
     return Center(
       child: Container(
@@ -56,6 +62,38 @@ class _QuestionPageState extends State<QuestionPage> {
               },
             ),
             const Spacer(),
+            TextField(
+              controller: _textController,
+              decoration: InputDecoration(
+                hintText:
+                    "upload new question pls make like this: answer-rightone-all the other",
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      _textController.clear();
+                    },
+                    icon: const Icon(Icons.clear)),
+              ),
+            ),
+            MaterialButton(
+              onPressed: () {
+                setState(() {
+                  userInput = _textController.text;
+                  listToUpdate = userInput.split("-");
+                  questionToUpload = listToUpdate[0];
+                  answersToUpload = [
+                    listToUpdate[1],
+                    listToUpdate[2],
+                    listToUpdate[3]
+                  ];
+
+                  questions
+                      .add(QuizQuestion(questionToUpload, answersToUpload));
+                });
+                print(userInput);
+              },
+              child: const Text("upload"),
+            ),
             ElevatedButton(
                 onPressed: widget.backHome, child: const Text("back home")),
           ],

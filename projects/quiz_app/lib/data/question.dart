@@ -36,7 +36,7 @@ var questions = [
     [
       "music",
       "nude",
-      "he wont have one",
+      "he does not have one",
     ],
   ),
 ];
