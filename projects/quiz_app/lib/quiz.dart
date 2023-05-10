@@ -27,6 +27,7 @@ class _QuizState extends State<Quiz> {
 
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
+    print(selectedAnswers);
     // ignore_for_file: avoid_print
     //hey
     print(answer);

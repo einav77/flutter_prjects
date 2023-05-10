@@ -3,7 +3,7 @@ import 'package:quiz_app/models/quiz_question.dart';
 var questions = [
   QuizQuestion(
     "what is itay?",
-    ["name", "tree", "nothing,"],
+    ["name", "tree", "nothing"],
   ),
   QuizQuestion("how much girls told gvili that he is handsome?", [
     "he dosent count",

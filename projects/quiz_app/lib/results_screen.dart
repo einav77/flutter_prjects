@@ -1,8 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/data/question.dart';
-import 'package:quiz_app/question_summary.dart';
+import 'package:quiz_app/questions_summary/question_summary.dart';
 
 class ResulesScreen extends StatelessWidget {
   const ResulesScreen(this.chosenAnswers, this.back, {super.key});
@@ -25,14 +26,29 @@ class ResulesScreen extends StatelessWidget {
     return summary;
   }
 
+  int numOfGood(List<Map<String, Object>> data) {
+    int numToReturn = 0;
+    int i = 0;
+    while (i < questions.length) {
+      if (chosenAnswers[i] == data[i]['corect_ansewr'] as String) {
+        print("tesh");
+        numToReturn++;
+      } else {}
+      i++;
+    }
+    return numToReturn;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     final summaryData = getSummaryData();
     final numOfQuestion = questions.length;
-    final numOfCorrectQuestion = summaryData.where((data) {
-      return data['user_answer'] == data['corect_answer'];
-    }).length;
+    //final numOfCorrectQuestion = summaryData.where((data) {
+    //return data['user_answer'] == data['corect_answer'];
+    //}).length;
+    final numOfCorrectQuestion = numOfGood(summaryData);
+    print(numOfCorrectQuestion);
     print(chosenAnswers.length);
     print('HERE');
     print(summaryData);
@@ -44,10 +60,14 @@ class ResulesScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "You answerd X out of Y correct!",
-              style: TextStyle(
-                  color: Colors.white, fontFamily: 'Raleway', fontSize: 20),
+            Text(
+              "You answerd $numOfCorrectQuestion out of $numOfQuestion correct!",
+              style: GoogleFonts.lato(
+                color: const Color.fromARGB(255, 230, 200, 253),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 30,
