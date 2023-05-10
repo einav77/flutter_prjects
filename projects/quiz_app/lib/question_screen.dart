@@ -66,7 +66,7 @@ class _QuestionPageState extends State<QuestionPage> {
               controller: _textController,
               decoration: InputDecoration(
                 hintText:
-                    "upload new question pls make like this: answer-rightone-all the other",
+                    "upload new question pls make like this: answer-rightone-all the otherד",
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                     onPressed: () {
