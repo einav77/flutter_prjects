@@ -3,15 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:login_screen/text_field.dart';
 import 'package:login_screen/password_field.dart';
 
-class LogUpScreen extends StatefulWidget {
-  const LogUpScreen({Key? key}) : super(key: key);
+class LogInScreen extends StatefulWidget {
+  final void Function() logup;
+  const LogInScreen(this.logup, {super.key});
   @override
   State<StatefulWidget> createState() {
-    return _LogUpScreenState();
+    return _LogInScreenState();
   }
 }
 
-class _LogUpScreenState extends State<LogUpScreen> {
+class _LogInScreenState extends State<LogInScreen> {
   List<String> inputs = [];
 
   TextStyle myTextStyle = const TextStyle(
@@ -37,7 +38,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            "Log up screen",
+            "Log in screen",
             style: TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
@@ -55,15 +56,6 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 });
               }),
           const SizedBox(height: 20),
-          CustomTextField(
-              textControoller: lastName,
-              hintText: "enter your last name",
-              onSubmit: (text) {
-                setState(() {
-                  inputs.add(text);
-                });
-              }),
-          const SizedBox(height: 20),
           PasswordTextField(
               controller: password,
               hintText: "enter your password",
@@ -73,50 +65,19 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 });
               }),
           const SizedBox(height: 20),
-          CustomTextField(
-              textControoller: email,
-              hintText: "enter your email",
-              onSubmit: (text) {
-                setState(() {
-                  inputs.add(text);
-                });
-              }),
-          const SizedBox(height: 20),
-          CustomTextField(
-              textControoller: phone,
-              hintText: "enter your phone number",
-              onSubmit: (text) {
-                setState(() {
-                  inputs.add(text);
-                });
-              }),
-          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               setState(() {
                 inputs.add(firstName.text);
-                inputs.add(lastName.text);
                 inputs.add(password.text);
-                inputs.add(phone.text);
-                inputs.add(email.text);
                 finalInput = inputs;
                 inputs = [];
                 print(finalInput);
               });
             },
-            child: const Text('Save'),
+            child: const Text('Log in'),
           ),
-          ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  firstName.clear();
-                  lastName.clear();
-                  phone.clear();
-                  password.clear();
-                  email.clear();
-                });
-              },
-              child: const Text("clear all"))
+          ElevatedButton(onPressed: widget.logup, child: const Text("sing up"))
         ],
       ),
     );

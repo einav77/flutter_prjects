@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_screen/logup_screen.dart';
+import 'package:login_screen/login_screen.dart';
 
 class Screen extends StatefulWidget {
   const Screen({super.key});
@@ -11,13 +12,20 @@ class Screen extends StatefulWidget {
 }
 
 class _ScreenState extends State<Screen> {
-  void logUpScreen() {
-    activeScreen = const SizedBox(
-      height: 20,
-    );
+  Widget? activeScreen;
+  @override
+  void initState() {
+    // TODO: implement initState
+    activeScreen = LogInScreen(logUpScreenUp);
+    super.initState();
   }
 
-  Widget activeScreen = const LogUpScreen();
+  void logUpScreenUp() {
+    setState(() {
+      activeScreen = const LogUpScreen();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
