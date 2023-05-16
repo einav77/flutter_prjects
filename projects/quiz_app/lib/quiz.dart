@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/data/question.dart';
-import 'package:quiz_app/start_screen.dart';
-import 'package:quiz_app/question_screen.dart';
-import 'package:quiz_app/results_screen.dart';
+import 'package:quiz_app/screens/start_screen.dart';
+import 'package:quiz_app/screens/question_screen.dart';
+import 'package:quiz_app/screens/results_screen.dart';
+import 'package:quiz_app/logPages/login_screen.dart';
+import 'package:quiz_app/logPages/logup_screen.dart';
+import 'package:quiz_app/screens/match_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -16,13 +19,41 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   Widget? activeScreen;
   List<String> selectedAnswers = [];
+  List<String> selectedAnswersHelp = [];
 
   @override
   void initState() {
     // TODO: implement initState
 
-    activeScreen = StartScreen(switchScreen);
+    activeScreen = LogInScreen(logUpScreenUp, startScreen);
     super.initState();
+  }
+
+  void matchScreenUp() {
+    setState(() {
+      activeScreen = MatchScreen(backToResults);
+    });
+  }
+
+  void backToResults() {
+    print(selectedAnswersHelp);
+    setState(() {
+      activeScreen =
+          ResulesScreen(selectedAnswersHelp, homeScreen, matchScreenUp);
+    });
+  }
+
+  void logUpScreenUp() {
+    setState(() {
+      activeScreen = LogUpScreen(startScreen);
+    });
+  }
+
+  void startScreen() {
+    setState(() {
+      print("start");
+      activeScreen = StartScreen(switchScreen);
+    });
   }
 
   void chooseAnswer(String answer) {
@@ -34,7 +65,9 @@ class _QuizState extends State<Quiz> {
     print(selectedAnswers.length == questions.length);
     if (selectedAnswers.length == questions.length) {
       setState(() {
-        activeScreen = ResulesScreen(selectedAnswers, homeScreen);
+        activeScreen =
+            ResulesScreen(selectedAnswers, homeScreen, matchScreenUp);
+        selectedAnswersHelp = selectedAnswers;
         selectedAnswers = [];
       });
     } else {}

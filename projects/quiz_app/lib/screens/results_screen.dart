@@ -6,9 +6,10 @@ import 'package:quiz_app/data/question.dart';
 import 'package:quiz_app/questions_summary/question_summary.dart';
 
 class ResulesScreen extends StatelessWidget {
-  const ResulesScreen(this.chosenAnswers, this.back, {super.key});
+  const ResulesScreen(this.chosenAnswers, this.back, this.myMatch, {super.key});
   final List<String> chosenAnswers;
   final void Function() back;
+  final void Function() myMatch;
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -77,15 +78,24 @@ class ResulesScreen extends StatelessWidget {
               height: 30,
             ),
             OutlinedButton.icon(
-                onPressed: back,
-                icon: const Icon(
-                  Icons.loop,
-                  color: Colors.white,
-                ),
-                label: const Text(
-                  "Restart Quiz!",
-                  style: TextStyle(color: Colors.white),
-                ))
+              onPressed: back,
+              icon: const Icon(
+                Icons.loop,
+                color: Colors.white,
+              ),
+              label: const Text(
+                "Restart Quiz!",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            OutlinedButton.icon(
+              onPressed: myMatch,
+              icon: const Icon(Icons.man),
+              label: const Text(
+                "find my match",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class StartScreen extends StatelessWidget {
-  const StartScreen(this.startQuiz, {super.key});
-  final void Function() startQuiz;
+class MatchScreen extends StatelessWidget {
+  const MatchScreen(this.backTo, {super.key});
+  final void Function() backTo;
 
   @override
   Widget build(BuildContext context) {
+    void Function() backTore = backTo;
     // TODO: implement build
     return Center(
       child: Column(
@@ -18,20 +19,23 @@ class StartScreen extends StatelessWidget {
           const SizedBox(height: 20),
           const SizedBox(height: 20),
           const Text(
-            "Learn Flutter the fun way ",
+            "this is the info of your match: ",
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
           const SizedBox(height: 10),
           const SizedBox(height: 10),
           OutlinedButton.icon(
-            onPressed: startQuiz,
+            onPressed: () {
+              print("fuck");
+              backTore();
+            },
             style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
             icon: const Icon(
               Icons.arrow_right_alt,
               color: Color.fromARGB(255, 255, 255, 255),
             ),
             label: const Text(
-              "Start Quiz",
+              "back to reults screen",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
