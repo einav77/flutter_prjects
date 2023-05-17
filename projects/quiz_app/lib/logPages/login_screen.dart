@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/logPages/text_field.dart';
 import 'package:quiz_app/logPages/password_field.dart';
+import 'package:web_socket_channel/io.dart';
 
 class LogInScreen extends StatefulWidget {
   final void Function() logup;
@@ -69,14 +70,41 @@ class _LogInScreenState extends State<LogInScreen> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              setState(() {
-                inputs.add(firstName.text);
-                inputs.add(password.text);
-                finalInput = inputs;
-                inputs = [];
-                print(finalInput);
+              var _regChannel =
+                  IOWebSocketChannel.connect("ws://10.0.0.19:8820");
+              String message = "login,${firstName.text},${password.text}";
+
+              _regChannel.sink.add(message);
+              var sub;
+              sub = _regChannel.stream.listen((data) {
+                print(data);
+                String serverAns;
+                serverAns = data;
+                if (serverAns.toLowerCase() == "true") {
+                  setState(() {
+                    inputs.add(firstName.text);
+                    inputs.add(password.text);
+                    finalInput = inputs;
+                    inputs = [];
+                    print(finalInput);
+                  });
+                  sub.cancel;
+                  start();
+                  _regChannel.sink.close();
+                } else {
+                  _regChannel.sink.close();
+                  setState(
+                    () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('some troubles in your sign in '),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    },
+                  );
+                }
               });
-              start();
             },
             child: const Text('Log in'),
           ),

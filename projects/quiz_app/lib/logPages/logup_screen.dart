@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/logPages/text_field.dart';
 import 'package:quiz_app/logPages/password_field.dart';
+import 'package:web_socket_channel/io.dart';
 
 class LogUpScreen extends StatefulWidget {
   const LogUpScreen(this.start, {super.key});
@@ -28,6 +29,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
     List<String> finalInput = [];
     int numToHelp = 0;
     List<String> input = [];
+    TextEditingController username = TextEditingController();
     TextEditingController firstName = TextEditingController();
     TextEditingController lastName = TextEditingController();
     TextEditingController email = TextEditingController();
@@ -49,6 +51,15 @@ class _LogUpScreenState extends State<LogUpScreen> {
           ),
           const SizedBox(height: 20),
           CustomTextField(
+              textControoller: username,
+              hintText: "enter your username",
+              onSubmit: (text) {
+                setState(() {
+                  inputs.add(text);
+                });
+              }),
+          const SizedBox(height: 10),
+          CustomTextField(
               textControoller: firstName,
               hintText: "enter your first name",
               onSubmit: (text) {
@@ -56,7 +67,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                   inputs.add(text);
                 });
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           CustomTextField(
               textControoller: lastName,
               hintText: "enter your last name",
@@ -65,7 +76,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                   inputs.add(text);
                 });
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           PasswordTextField(
               controller: password,
               hintText: "enter your password",
@@ -74,7 +85,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                   inputs.add(item!);
                 });
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           CustomTextField(
               textControoller: email,
               hintText: "enter your email",
@@ -83,7 +94,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                   inputs.add(text);
                 });
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           CustomTextField(
               textControoller: phone,
               hintText: "enter your phone number",
@@ -92,10 +103,11 @@ class _LogUpScreenState extends State<LogUpScreen> {
                   inputs.add(text);
                 });
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
               setState(() {
+                inputs.add(username.text);
                 inputs.add(firstName.text);
                 inputs.add(lastName.text);
                 inputs.add(password.text);
@@ -104,6 +116,11 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 finalInput = inputs;
                 inputs = [];
                 print(finalInput);
+                var _regChannel =
+                    IOWebSocketChannel.connect("ws://10.0.0.19:8820");
+                String message =
+                    "logup,${username.text},${firstName.text},${lastName.text},${password.text},${phone.text},${email.text}, empty";
+                _regChannel.sink.add(message);
               });
               start();
             },
@@ -112,6 +129,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
           ElevatedButton(
               onPressed: () {
                 setState(() {
+                  username.clear();
                   firstName.clear();
                   lastName.clear();
                   phone.clear();
