@@ -95,6 +95,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   _regChannel.sink.close();
                   setState(
                     () {
+                      print("check");
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('some troubles in your sign in '),
