@@ -3,10 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/logPages/text_field.dart';
 import 'package:quiz_app/logPages/password_field.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:quiz_app/user.dart';
 
 class LogUpScreen extends StatefulWidget {
-  const LogUpScreen(this.start, {super.key});
+  const LogUpScreen(this.start, this.callback, {super.key});
   final void Function() start;
+  final Function callback;
+
   @override
   State<StatefulWidget> createState() {
     return _LogUpScreenState();
@@ -107,6 +110,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
           ElevatedButton(
             onPressed: () {
               setState(() {
+                user u1 = user(username.text, "empty", phone.text, email.text);
                 inputs.add(username.text);
                 inputs.add(firstName.text);
                 inputs.add(lastName.text);
@@ -116,8 +120,9 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 finalInput = inputs;
                 inputs = [];
                 print(finalInput);
+                widget.callback(username.text);
                 var _regChannel =
-                    IOWebSocketChannel.connect("ws://10.0.0.19:8820");
+                    IOWebSocketChannel.connect("ws://10.0.0.1:8820");
                 String message =
                     "logup,${username.text},${firstName.text},${lastName.text},${password.text},${phone.text},${email.text}, empty";
                 _regChannel.sink.add(message);

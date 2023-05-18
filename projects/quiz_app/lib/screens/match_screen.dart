@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/user.dart';
 
-class MatchScreen extends StatelessWidget {
-  const MatchScreen(this.backTo, {super.key});
+class MatchScreen extends StatefulWidget {
+  user u1 = user('', '', '', '');
+
+  MatchScreen(this.backTo, this.u1, this.username, {super.key});
+  final String username;
   final void Function() backTo;
+  @override
+  State<MatchScreen> createState() {
+    // TODO: implement createState
+    return _MatchScreenState();
+  }
+}
+
+class _MatchScreenState extends State<MatchScreen> {
+  user user1 = user("", "", "", "");
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    user1 = widget.u1;
+  }
 
   @override
   Widget build(BuildContext context) {
-    void Function() backTore = backTo;
+    void Function() backTore = widget.backTo;
     // TODO: implement build
     return Center(
       child: Column(

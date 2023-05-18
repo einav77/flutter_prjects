@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:quiz_app/user.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen(this.startQuiz, {super.key});

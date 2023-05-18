@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/data/question.dart';
 import 'package:quiz_app/questions_summary/question_summary.dart';
+import 'package:quiz_app/user.dart';
+import 'package:web_socket_channel/io.dart';
 
 class ResulesScreen extends StatelessWidget {
-  const ResulesScreen(this.chosenAnswers, this.back, this.myMatch, {super.key});
+  const ResulesScreen(
+      this.chosenAnswers, this.back, this.myMatch, this.username,
+      {super.key});
   final List<String> chosenAnswers;
   final void Function() back;
   final void Function() myMatch;
+  final String username;
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -89,7 +94,15 @@ class ResulesScreen extends StatelessWidget {
               ),
             ),
             OutlinedButton.icon(
-              onPressed: myMatch,
+              onPressed: () {
+                var _regChannel =
+                    IOWebSocketChannel.connect("ws://10.0.0.1:8820");
+                String sendToServer = "find," + username;
+                print(sendToServer);
+
+                _regChannel.sink.add(sendToServer);
+                myMatch();
+              },
               icon: const Icon(Icons.man),
               label: const Text(
                 "find my match",

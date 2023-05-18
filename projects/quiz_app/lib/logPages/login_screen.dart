@@ -3,11 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/logPages/text_field.dart';
 import 'package:quiz_app/logPages/password_field.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:quiz_app/user.dart';
 
 class LogInScreen extends StatefulWidget {
   final void Function() logup;
   final void Function() start;
-  const LogInScreen(this.logup, this.start, {super.key});
+  final Function callback;
+
+  const LogInScreen(this.logup, this.start, this.callback, {super.key});
   @override
   State<StatefulWidget> createState() {
     return _LogInScreenState();
@@ -16,6 +19,7 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   List<String> inputs = [];
+  String username = '';
 
   TextStyle myTextStyle = const TextStyle(
     fontFamily: 'Lato',
@@ -71,22 +75,25 @@ class _LogInScreenState extends State<LogInScreen> {
           ElevatedButton(
             onPressed: () {
               var _regChannel =
-                  IOWebSocketChannel.connect("ws://10.0.0.19:8820");
+                  IOWebSocketChannel.connect("ws://10.0.0.1:8820");
               String message = "login,${firstName.text},${password.text}";
 
               _regChannel.sink.add(message);
               var sub;
               sub = _regChannel.stream.listen((data) {
                 print(data);
-                String serverAns;
-                serverAns = data;
-                if (serverAns.toLowerCase() == "true") {
+                List<String> serverAns;
+                serverAns = data.split(",");
+                if (serverAns[0].toLowerCase() == "true") {
+                  user u1 = user(data[1], data[5], data[4], data[3]);
                   setState(() {
+                    username = firstName.text;
                     inputs.add(firstName.text);
                     inputs.add(password.text);
                     finalInput = inputs;
                     inputs = [];
                     print(finalInput);
+                    widget.callback(firstName.text);
                   });
                   sub.cancel;
                   start();
@@ -113,5 +120,9 @@ class _LogInScreenState extends State<LogInScreen> {
         ],
       ),
     );
+  }
+
+  String getUsername() {
+    return username;
   }
 }
