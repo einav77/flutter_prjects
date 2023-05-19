@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/user.dart';
+import 'package:web_socket_channel/io.dart';
 
 class MatchScreen extends StatefulWidget {
   user u1 = user('', '', '', '');
@@ -16,6 +17,13 @@ class MatchScreen extends StatefulWidget {
 
 class _MatchScreenState extends State<MatchScreen> {
   user user1 = user("", "", "", "");
+  String firstName = '';
+  String lastName = '';
+  String phoneNum = '';
+  String email = '';
+
+  void changeValue() {}
+
   @override
   void initState() {
     // TODO: implement initState
@@ -23,6 +31,7 @@ class _MatchScreenState extends State<MatchScreen> {
     user1 = widget.u1;
   }
 
+  var sub;
   @override
   Widget build(BuildContext context) {
     void Function() backTore = widget.backTo;
@@ -38,9 +47,33 @@ class _MatchScreenState extends State<MatchScreen> {
           const SizedBox(height: 20),
           const SizedBox(height: 20),
           const Text(
-            "this is the info of your match: ",
+            "press for info of your match: ",
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
+          Text(firstName),
+          Text(lastName),
+          Text(phoneNum),
+          Text(email),
+          ElevatedButton(
+              onPressed: () {
+                var _regChannel =
+                    IOWebSocketChannel.connect("ws://10.0.0.1:8820");
+                _regChannel.sink.add("find," + widget.username);
+                sub = _regChannel.stream.listen((data) {
+                  List<String> serverAns;
+                  serverAns = data.split(',');
+                  setState(() {
+                    firstName = serverAns[1];
+                    lastName = serverAns[2];
+                    phoneNum = serverAns[3];
+                    email = serverAns[4];
+                  });
+                });
+                sub.cancel;
+                _regChannel.sink.close();
+                print(firstName + "firstname");
+              },
+              child: Text("show my nigger")),
           const SizedBox(height: 10),
           const SizedBox(height: 10),
           OutlinedButton.icon(

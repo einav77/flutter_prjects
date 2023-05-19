@@ -95,12 +95,6 @@ class ResulesScreen extends StatelessWidget {
             ),
             OutlinedButton.icon(
               onPressed: () {
-                var _regChannel =
-                    IOWebSocketChannel.connect("ws://10.0.0.1:8820");
-                String sendToServer = "find," + username;
-                print(sendToServer);
-
-                _regChannel.sink.add(sendToServer);
                 myMatch();
               },
               icon: const Icon(Icons.man),
