@@ -77,7 +77,7 @@ class _QuizState extends State<Quiz> {
       for (int i = 0; i < selectedAnswers.length; i++) {
         ansToServer = ansToServer + ',' + selectedAnswers[i];
       }
-      var _regChannel = IOWebSocketChannel.connect("ws://10.0.0.1:8820");
+      var _regChannel = IOWebSocketChannel.connect("ws://10.0.0.19:8820");
       _regChannel.sink.add(ansToServer);
 
       setState(() {

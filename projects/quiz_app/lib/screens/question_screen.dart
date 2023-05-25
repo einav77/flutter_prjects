@@ -49,11 +49,11 @@ class _QuestionPageState extends State<QuestionPage> {
           children: [
             Text(
               currentQuestion.text,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontSize: 40),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 30,
+              height: 200,
             ),
             ...currentQuestion.getShuffledAnswers().map(
               (item) {
@@ -62,38 +62,46 @@ class _QuestionPageState extends State<QuestionPage> {
                 });
               },
             ),
-            const Spacer(),
-            TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                hintText:
-                    "upload new question pls make like this: answer-rightone-all the otherד",
-                border: const OutlineInputBorder(),
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      _textController.clear();
-                    },
-                    icon: const Icon(Icons.clear)),
+            const SizedBox(
+              height: 150,
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextField(
+                controller: _textController,
+                decoration: InputDecoration(
+                  hintText:
+                      "upload new question pls make like this: answer-rightone-all the other",
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        _textController.clear();
+                      },
+                      icon: const Icon(Icons.clear)),
+                ),
               ),
             ),
-            MaterialButton(
-              onPressed: () {
-                setState(() {
-                  userInput = _textController.text;
-                  listToUpdate = userInput.split("-");
-                  questionToUpload = listToUpdate[0];
-                  answersToUpload = [
-                    listToUpdate[1],
-                    listToUpdate[2],
-                    listToUpdate[3]
-                  ];
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    userInput = _textController.text;
+                    listToUpdate = userInput.split("-");
+                    questionToUpload = listToUpdate[0];
+                    answersToUpload = [
+                      listToUpdate[1],
+                      listToUpdate[2],
+                      listToUpdate[3]
+                    ];
 
-                  questions
-                      .add(QuizQuestion(questionToUpload, answersToUpload));
-                });
-                print(userInput);
-              },
-              child: const Text("upload"),
+                    questions
+                        .add(QuizQuestion(questionToUpload, answersToUpload));
+                  });
+                  print(userInput);
+                },
+                child: const Text("upload"),
+              ),
             ),
             ElevatedButton(
                 onPressed: widget.backHome, child: const Text("back home")),

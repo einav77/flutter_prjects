@@ -122,7 +122,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 print(finalInput);
                 widget.callback(username.text);
                 var _regChannel =
-                    IOWebSocketChannel.connect("ws://10.0.0.1:8820");
+                    IOWebSocketChannel.connect("ws://10.0.0.19:8820");
                 String message =
                     "logup,${username.text},${firstName.text},${lastName.text},${password.text},${phone.text},${email.text}, empty";
                 _regChannel.sink.add(message);

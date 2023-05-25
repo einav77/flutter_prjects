@@ -75,7 +75,7 @@ class _LogInScreenState extends State<LogInScreen> {
           ElevatedButton(
             onPressed: () {
               var _regChannel =
-                  IOWebSocketChannel.connect("ws://10.0.0.1:8820");
+                  IOWebSocketChannel.connect("ws://10.0.0.19:8820");
               String message = "login,${firstName.text},${password.text}";
 
               _regChannel.sink.add(message);

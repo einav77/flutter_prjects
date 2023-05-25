@@ -57,15 +57,15 @@ class _MatchScreenState extends State<MatchScreen> {
           ElevatedButton(
               onPressed: () {
                 var _regChannel =
-                    IOWebSocketChannel.connect("ws://10.0.0.1:8820");
+                    IOWebSocketChannel.connect("ws://10.0.0.19:8820");
                 _regChannel.sink.add("find," + widget.username);
                 sub = _regChannel.stream.listen((data) {
                   List<String> serverAns;
                   serverAns = data.split(',');
                   setState(() {
-                    firstName = serverAns[1];
-                    lastName = serverAns[2];
-                    phoneNum = serverAns[3];
+                    firstName = serverAns[2];
+                    lastName = serverAns[3];
+                    phoneNum = serverAns[5];
                     email = serverAns[4];
                   });
                 });
