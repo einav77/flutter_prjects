@@ -73,7 +73,7 @@ class _MatchScreenState extends State<MatchScreen> {
                 _regChannel.sink.close();
                 print(firstName + "firstname");
               },
-              child: Text("show my nigger")),
+              child: Text("show my match")),
           const SizedBox(height: 10),
           const SizedBox(height: 10),
           OutlinedButton.icon(
