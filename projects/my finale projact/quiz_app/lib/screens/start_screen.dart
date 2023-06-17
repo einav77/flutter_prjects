@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/user.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen(this.startQuiz, {super.key});
+  const StartScreen(this.startQuiz, this.match, {super.key});
   final void Function() startQuiz;
+  final void Function() match;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,20 @@ class StartScreen extends StatelessWidget {
             ),
             label: const Text(
               "Start Quiz",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: match,
+            style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+            icon: const Icon(
+              Icons.arrow_right_alt,
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
+            label: const Text(
+              "find my match",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),

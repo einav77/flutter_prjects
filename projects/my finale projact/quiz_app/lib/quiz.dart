@@ -52,9 +52,14 @@ class _QuizState extends State<Quiz> {
 
   void backToResults() {
     print(selectedAnswersHelp);
+
     setState(() {
-      activeScreen = ResulesScreen(
-          selectedAnswersHelp, homeScreen, matchScreenUp, username);
+      if (selectedAnswersHelp.length > 1) {
+        activeScreen = ResulesScreen(
+            selectedAnswersHelp, homeScreen, matchScreenUp, username);
+      } else {
+        activeScreen = StartScreen(switchScreen, matchScreenUp);
+      }
     });
   }
 
@@ -68,7 +73,7 @@ class _QuizState extends State<Quiz> {
     setState(() {
       print(ip);
       print("start");
-      activeScreen = StartScreen(switchScreen);
+      activeScreen = StartScreen(switchScreen, matchScreenUp);
     });
   }
 
@@ -84,7 +89,7 @@ class _QuizState extends State<Quiz> {
       for (int i = 0; i < selectedAnswers.length; i++) {
         ansToServer = ansToServer + ',' + selectedAnswers[i];
       }
-      var _regChannel = IOWebSocketChannel.connect("ws://192.168.0.164:8820");
+      var _regChannel = IOWebSocketChannel.connect(ip);
       _regChannel.sink.add(ansToServer);
 
       setState(() {
@@ -105,7 +110,7 @@ class _QuizState extends State<Quiz> {
 
   void homeScreen() {
     setState(() {
-      activeScreen = StartScreen(switchScreen);
+      activeScreen = StartScreen(switchScreen, matchScreenUp);
     });
   }
 

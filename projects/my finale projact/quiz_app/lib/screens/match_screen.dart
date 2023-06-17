@@ -51,11 +51,29 @@ class _MatchScreenState extends State<MatchScreen> {
             "press for info of your match: ",
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
-          Text(firstName),
-          Text(lastName),
-          Text(phoneNum),
-          Text(email),
+          Text("the first name of your match:"),
+          Text(
+            firstName,
+            style: TextStyle(color: Colors.white),
+          ),
           const SizedBox(height: 10),
+          const SizedBox(height: 10),
+          Text("the last name of your match:"),
+          Text(
+            lastName,
+            style: TextStyle(color: Colors.white),
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(height: 10),
+          Text("your match email and phone number:"),
+          Text(
+            phoneNum,
+            style: TextStyle(color: Colors.white),
+          ),
+          Text(
+            email,
+            style: TextStyle(color: Colors.white),
+          ),
           const SizedBox(height: 10),
           const SizedBox(height: 10),
           ElevatedButton(
@@ -94,7 +112,7 @@ class _MatchScreenState extends State<MatchScreen> {
               color: Color.fromARGB(255, 255, 255, 255),
             ),
             label: const Text(
-              "back to reults screen",
+              "back to previous screen",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),

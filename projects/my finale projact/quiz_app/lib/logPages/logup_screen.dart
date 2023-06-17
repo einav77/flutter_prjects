@@ -120,9 +120,12 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 finalInput = inputs;
                 inputs = [];
                 print(finalInput);
-                widget.callback(username.text);
+                widget.callback(username.text + "," + '10.0.0.19');
+                print("try to");
+
                 var _regChannel =
-                    IOWebSocketChannel.connect("ws://192.168.0.164:8820");
+                    IOWebSocketChannel.connect("ws://10.0.0.19:8820");
+                print("conected");
                 String message =
                     "logup,${username.text},${firstName.text},${lastName.text},${password.text},${phone.text},${email.text}, empty";
                 _regChannel.sink.add(message);
